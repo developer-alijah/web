@@ -1,0 +1,445 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #111820;
+  font-family: Arial, sans-serif;
+}
+
+/* Navbar */
+
+nav {
+  height: 62px;
+  padding: 8px 22px;
+
+  display: flex;
+  align-items: center;
+
+  background: rgba(20, 25, 32, 0.75);
+  backdrop-filter: blur(15px);
+
+  color: white;
+  border-radius: 35px;
+}
+
+/* Logo */
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  margin-right: 25px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+/* Menu */
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.link a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+
+  padding: 13px 15px;
+  border-radius: 10px;
+}
+
+/* Home active */
+
+.link .active {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Hover box */
+
+.link a:hover {
+  background: white;
+  color: black;
+  border-radius: 8px;
+}
+
+/* Right side */
+
+.right {
+  margin-left: auto;
+
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.right i {
+  font-size: 17px;
+}
+
+.search {
+  cursor: pointer;
+}
+
+/* Language */
+
+.language {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 8px;
+  cursor: pointer;
+  /* top: 50px;
+  right: 50px; */
+  z-index: 100;
+}
+
+.language i {
+  font-size: 11px;
+}
+
+.language:hover {
+  background: white;
+  color: black;
+  border-radius: 8px;
+}
+
+/* Language dropdown */
+
+.dropdown {
+  display: none;
+
+  position: absolute;
+  top: 45px;
+  right: 0;
+
+  width: 130px;
+
+  background: #202832;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.dropdown a {
+  display: block;
+
+  color: white;
+  text-decoration: none;
+
+  padding: 9px;
+  font-size: 13px;
+}
+
+.dropdown a:hover {
+  background: #3b444e;
+  border-radius: 5px;
+}
+
+.language:hover .dropdown {
+  display: block;
+}
+
+/*  icon */
+
+.user {
+  font-size: 28px !important;
+}
+
+/* Join Prime */
+
+button {
+  background: #1593e8;
+  color: white;
+
+  border: none;
+  border-radius: 7px;
+
+  padding: 13px 18px;
+
+  font-size: 14px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+/* button:hover {
+  background: #087bc9;
+} */
+
+/* video section */
+
+.slider {
+  width: 100%;
+  height: 700px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+input {
+  display: none;
+}
+
+.videos {
+  display: flex;
+  width: 300%;
+  height: 100%;
+
+  animation: slide 16s infinite;
+}
+
+.video {
+  width: 33%;
+}
+
+.video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* animation */
+
+@keyframes slide {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-66%);
+  }
+}
+
+/* buttons */
+
+.buttons {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons label {
+  background: black;
+  color: white;
+  padding: 10px;
+  font-size: 25px;
+  cursor: pointer;
+}
+/* -----------------
+ card section
+----------------------*/
+.card1 {
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+/* img1 */
+.one {
+  width: 400px;
+  height: 230px;
+  background-color: pink;
+  border-radius: 20px;
+  transition: transform 0.3s ease-in-out;
+}
+.one:hover {
+  transform: scale(1.5);
+}
+/* img2 */
+.two {
+  width: 400px;
+  height: 230px;
+  background-color: pink;
+  border-radius: 20px;
+  transition: transform 0.3s ease-in-out;
+}
+.two:hover {
+  transform: scale(1.5);
+}
+/* img3 */
+.three {
+  width: 400px;
+  height: 230px;
+  background-color: pink;
+  border-radius: 20px;
+  transition: transform 0.3s ease-in-out;
+}
+.three:hover {
+  transform: scale(1.5);
+}
+/* img4 */
+.four {
+  width: 400px;
+  height: 230px;
+  background-color: pink;
+  border-radius: 20px;
+  transition: transform 0.3s ease-in-out;
+}
+.four:hover {
+  transform: scale(1.5);
+}
+/* -----------------
+long card section
+----------------------*/
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.img-1 {
+  width: 400px;
+  height: 580px;
+  background-color: plum;
+  border-radius: 18px;
+  transition: transform 0.3s ease-in-out;
+}
+.img-1:hover {
+  transform: scaleY(1.1);
+}
+.img-2 {
+  width: 400px;
+  height: 580px;
+  background-color: plum;
+  border-radius: 18px;
+  transition: transform 0.3s ease-in-out;
+}
+.img-2:hover {
+  transform: scaleY(1.1);
+}
+.img-3 {
+  width: 400px;
+  height: 580px;
+  background-color: plum;
+  border-radius: 18px;
+  transition: transform 0.3s ease-in-out;
+}
+.img-3:hover {
+  transform: scaleY(1.1);
+}
+.img-4 {
+  width: 400px;
+  height: 580px;
+  background-color: plum;
+  border-radius: 18px;
+  transition: transform 0.3s ease-in-out;
+}
+.img-4:hover {
+  transform: scaleY(1.1);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1000px) {
+  nav {
+    flex-wrap: wrap;
+    height: auto;
+    border-radius: 20px;
+    padding: 10px 16px;
+  }
+  .link {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 8px;
+  }
+  .link a {
+    font-size: 15px;
+    padding: 10px 12px;
+    white-space: nowrap;
+  }
+
+  .slider {
+    height: 56vw;
+  }
+
+  div[style*="padding: 80px"] {
+    padding: 30px 20px !important;
+  }
+  div[style*="margin-top: -100px"] {
+    margin-top: 0 !important;
+  }
+
+  .card1,
+  .card {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .one,
+  .two,
+  .three,
+  .four {
+    width: calc(50% - 10px);
+    height: auto;
+    aspect-ratio: 400 / 230;
+  }
+  .img-1,
+  .img-2,
+  .img-3,
+  .img-4 {
+    width: calc(50% - 10px);
+    height: auto;
+    aspect-ratio: 400 / 580;
+  }
+  .one img,
+  .two img,
+  .three img,
+  .four img,
+  .img-1 img,
+  .img-2 img,
+  .img-3 img,
+  .img-4 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .one:hover,
+  .two:hover,
+  .three:hover,
+  .four:hover {
+    transform: scale(1.05);
+  }
+  .img-1:hover,
+  .img-2:hover,
+  .img-3:hover,
+  .img-4:hover {
+    transform: scaleY(1.05);
+  }
+}
+
+@media (max-width: 600px) {
+  .logo {
+    font-size: 20px;
+    margin-right: 10px;
+  }
+  .right {
+    gap: 12px;
+  }
+  .right .fa-grip-dots {
+    display: none;
+  }
+  h1 {
+    font-size: 20px;
+  }
+
+  .one,
+  .two,
+  .three,
+  .four {
+    width: 100%;
+  }
+  .img-1,
+  .img-2,
+  .img-3,
+  .img-4 {
+    width: 80%;
+  }
+}

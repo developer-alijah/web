@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TV Guide</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1000px) {
+      nav {
+        flex-wrap: wrap;
+        height: auto;
+        border-radius: 12px;
+        padding: 10px 16px;
+      }
+
+      .link {
+        order: 3;
+        width: 100%;
+        overflow-x: auto;
+        margin-top: 8px;
+      }
+
+      .link a {
+        font-size: 15px;
+        padding: 10px 12px;
+        white-space: nowrap;
+      }
+
+      .card1 {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .one,
+      .two,
+      .three,
+      .four {
+        width: calc(50% - 10px);
+        height: auto;
+        aspect-ratio: 400 / 230;
+      }
+
+      .one img,
+      .two img,
+      .three img,
+      .four img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .one:hover,
+      .two:hover,
+      .three:hover,
+      .four:hover {
+        transform: scale(1.05);
+      }
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .logo {
+        font-size: 20px;
+        margin-right: 10px;
+      }
+
+      .right {
+        gap: 12px;
+      }
+
+      .right .fa-grip-dots {
+        display: none;
+      }
+
+      h1 {
+        font-size: 20px;
+      }
+
+      .one,
+      .two,
+      .three,
+      .four {
+        width: 100%;
+      }
+    }
+
+    body {
+      background-color: #0b0f17;
+      color: #ffffff;
+      padding: 20px;
+    }
+
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    /* nav */
+    nav {
+      height: 62px;
+      padding: 8px 22px;
+
+      display: flex;
+      align-items: center;
+
+      background: rgba(20, 25, 32, 0.75);
+      backdrop-filter: blur(15px);
+
+      color: white;
+      border-radius: 5px;
+      position: sticky;
+      margin-bottom: -10px;
+      margin-top: -13px;
+    }
+
+    /* Logo */
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      margin-right: 25px;
+      font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+    }
+
+    /* Menu */
+
+    .link {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .link a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: bold;
+
+      padding: 13px 15px;
+      border-radius: 10px;
+    }
+
+    /* Home active */
+
+    .link .active {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Hover box */
+
+    .link a:hover {
+      background: white;
+      color: black;
+      border-radius: 8px;
+    }
+
+    /* Right side */
+
+    .right {
+      margin-left: auto;
+
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .right i {
+      font-size: 17px;
+    }
+
+    .search {
+      cursor: pointer;
+    }
+
+    /* Language */
+
+    .language {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 8px;
+      cursor: pointer;
+      /* top: 50px;
+  right: 50px; */
+      z-index: 100;
+    }
+
+    .language i {
+      font-size: 11px;
+    }
+
+    .language:hover {
+      background: white;
+      color: black;
+      border-radius: 8px;
+    }
+
+    /* Language dropdown */
+
+    .dropdown {
+      display: none;
+
+      position: absolute;
+      top: 45px;
+      right: 0;
+
+      width: 130px;
+
+      background: #202832;
+      border-radius: 8px;
+      padding: 8px;
+    }
+
+    .dropdown a {
+      display: block;
+
+      color: white;
+      text-decoration: none;
+
+      padding: 9px;
+      font-size: 13px;
+    }
+
+    .dropdown a:hover {
+      background: #3b444e;
+      border-radius: 5px;
+    }
+
+    /* Show dropdown */
+
+    .language:hover .dropdown {
+      display: block;
+    }
+
+    /* User icon */
+
+    .user {
+      font-size: 28px !important;
+    }
+
+    /* Join Prime */
+
+    button {
+      background: #1593e8;
+      color: white;
+
+      border: none;
+      border-radius: 7px;
+
+      padding: 13px 18px;
+
+      font-size: 14px;
+      font-weight: bold;
+
+      cursor: pointer;
+    }
+
+    .row h2 {
+      font-size: 18px;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .cards-list {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+    }
+
+    /* Base Card  */
+    .card {
+      background-color: #1a202c;
+      height: 90px;
+      border-radius: 8px;
+      padding: 12px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    /* width of diff card*/
+    .xs {
+      width: 45px;
+    }
+
+    .small {
+      width: 70px;
+    }
+
+    .medium {
+      width: 100px;
+    }
+
+    .large {
+      width: 140px;
+    }
+
+    .xl {
+      width: 160px;
+    }
+
+    /* Channel Logo  */
+    .channel-logo {
+      width: 90px;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      font-weight: bold;
+      text-align: center;
+      background-color: #181d28;
+    }
+
+    .lock {
+      position: absolute;
+      bottom: 6px;
+      left: 6px;
+      font-size: 10px;
+      background: #f1c40f;
+      border-radius: 2px;
+      padding: 1px 3px;
+    }
+
+    /* Text Styling */
+    .time-left {
+      font-size: 12px;
+      color: #9aa5b5;
+      margin-bottom: 8px;
+    }
+
+    .time {
+      font-size: 13px;
+      color: #a0aec0;
+      margin-bottom: 6px;
+    }
+
+    .title {
+      font-size: 14px;
+      font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .underlined {
+      text-decoration: underline;
+    }
+
+    /* Active Highlighted Cards */
+    .active {
+      background-color: #212936;
+      width: 130px;
+    }
+
+    .fancode-card {
+      width: 190px;
+      position: relative;
+    }
+
+    /* Red Progress Bar */
+    .progress-bar {
+      width: 100%;
+      height: 3px;
+      background-color: #4a5568;
+      margin-top: 15px;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .progress {
+      width: 40%;
+      height: 100%;
+      background-color: #e50914;
+    }
+
+    /* cards */
+    .card1 {
+      display: flex;
+      align-items: center;
+      justify-self: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    /* img1 */
+    .one {
+      width: 400px;
+      height: 230px;
+      background-color: pink;
+      border-radius: 20px;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .one:hover {
+      transform: scale(1.5);
+    }
+
+    /* img2 */
+    .two {
+      width: 400px;
+      height: 230px;
+      background-color: pink;
+      border-radius: 20px;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .two:hover {
+      transform: scale(1.5);
+    }
+
+    /* img3 */
+    .three {
+      width: 400px;
+      height: 230px;
+      background-color: pink;
+      border-radius: 20px;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .three:hover {
+      transform: scale(1.5);
+    }
+
+    /* img4 */
+    .four {
+      width: 400px;
+      height: 230px;
+      background-color: pink;
+      border-radius: 20px;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .four:hover {
+      transform: scale(1.5);
+    }
+  </style>
+</head>
+
+<body>
+
+
+
+  <div class="container">
+    <!-- navbar -->
+    <main>
+      <nav>
+        <!-- logo -->
+        <div class="logo">prime video</div>
+        <br /> <br /><br />
+
+        <div class="link">
+
+          <a href="index.html">Home</a>
+
+          <a href="#">Free to me</a>
+
+          <a href="#">Movies</a>
+
+          <a href="#">TV shows</a>
+
+          <a href="#">Live TV</a>
+
+          <a href="#">
+            <i class="fa-solid fa-border-all"></i>
+            Subscriptions
+          </a>
+
+        </div>
+
+        <div class="right">
+
+          <i class="fa-solid fa-magnifying-glass search"></i>
+          <br /> <br /><br />
+
+          <!-- Language Dropdown -->
+          <div class="language">
+            <span>EN</span>
+            <i class="fa-solid fa-chevron-down"></i>
+
+            <br /> <br /><br />
+            <div class="dropdown" style="position: absolute;
+        top: 50px;
+        right: 20px;
+        z-index: 100;">
+              <a href="#">English</a>
+              <a href="#">Hindi</a>
+              <a href="#">Tamil</a>
+              <a href="#">Telugu</a>
+              <a href="#">Bengali</a>
+            </div>
+          </div>
+
+          <i class="fa-solid fa-grip-dots"></i>
+
+          <i class="fa-solid fa-circle-user user"></i>
+
+          <button>Join Prime</button>
+
+        </div>
+
+      </nav>
+    </main>
+    <br /> <br /><br /><br /><br />
+    <!-- BBC Kids Row -->
+    <div class="row">
+      <h2>BBC Kids</h2>
+      <div class="cards-list">
+
+        <div class="card channel-logo">
+          <span>CBeebies</span>
+          <span class="lock">🔒</span>
+        </div>
+
+        <div class="card active">
+          <p class="time-left">4 min left</p>
+          <p class="title underlined">Yakka Dee</p>
+        </div>
+
+        <div class="card small">
+          <p class="time">3:45 P</p>
+          <p class="title">Me...</p>
+        </div>
+        <div class="card small">
+          <p class="time">3:55 PM</p>
+          <p class="title">Mojo ...</p>
+        </div>
+        <div class="card xs">
+          <p class="time">4:10</p>
+          <p class="title">B...</p>
+        </div>
+        <div class="card small">
+          <p class="time">4:17 PM</p>
+          <p class="title">Bluey</p>
+        </div>
+        <div class="card xs">
+          <p class="time">4:30</p>
+          <p class="title">H..</p>
+        </div>
+        <div class="card xs">
+          <p class="time">4:37</p>
+          <p class="title">H..</p>
+        </div>
+        <div class="card xs">
+          <p class="time">4:45</p>
+          <p class="title">H..</p>
+        </div>
+        <div class="card xs">
+          <p class="time">4:52</p>
+          <p class="title">H..</p>
+        </div>
+        <div class="card medium">
+          <p class="time">5:00 PM</p>
+          <p class="title">Go Jet...</p>
+        </div>
+        <div class="card xs">
+          <p class="time">5:15</p>
+          <p class="title">B..</p>
+        </div>
+        <div class="card xs">
+          <p class="time">5:22</p>
+          <p class="title">B..</p>
+        </div>
+        <div class="card xs">
+          <p class="time">5:30</p>
+          <p class="title">B..</p>
+        </div>
+        <div class="card xs">
+          <p class="time">5:37</p>
+          <p class="title">B..</p>
+        </div>
+        <div class="card medium">
+          <p class="time">5:45 PM</p>
+          <p class="title">Andy'...</p>
+        </div>
+        <div class="card large">
+          <p class="time">6:00 PM</p>
+          <p class="title">Playtime To...</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- BBC Player Row -->
+    <div class="row">
+      <h2>BBC Player</h2>
+      <div class="cards-list">
+
+        <div class="card channel-logo">
+          <span>CBeebies</span>
+          <span class="lock">🔒</span>
+        </div>
+
+        <div class="card active">
+          <p class="time-left">4 min left</p>
+          <p class="title underlined">Yakka Dee</p>
+        </div>
+
+        <div class="card small">
+          <p class="time">3:45 P</p>
+          <p class="title">Me...</p>
+        </div>
+        <div class="card small">
+          <p class="time">3:55 PM</p>
+          <p class="title">Mojo ...</p>
+        </div>
+        <div class="card xs">
+          <p class="time">4:10</p>
+          <p class="title">B...</p>
+        </div>
+        <div class="card small">
+          <p class="time">4:17 PM</p>
+          <p class="title">Bluey</p>
+        </div>
+        <div class="card xs">
+          <p class="time">4:30</p>
+          <p class="title">H..</p>
+        </div>
+        <div class="card xs">
+          <p class="time">4:37</p>
+          <p class="title">H..</p>
+        </div>
+        <div class="card xs">
+          <p class="time">4:45</p>
+          <p class="title">H..</p>
+        </div>
+        <div class="card xs">
+          <p class="time">4:52</p>
+          <p class="title">H..</p>
+        </div>
+        <div class="card medium">
+          <p class="time">5:00 PM</p>
+          <p class="title">Go Jet...</p>
+        </div>
+        <div class="card xs">
+          <p class="time">5:15</p>
+          <p class="title">B..</p>
+        </div>
+        <div class="card xs">
+          <p class="time">5:22</p>
+          <p class="title">B..</p>
+        </div>
+        <div class="card xs">
+          <p class="time">5:30</p>
+          <p class="title">B..</p>
+        </div>
+        <div class="card xs">
+          <p class="time">5:37</p>
+          <p class="title">B..</p>
+        </div>
+        <div class="card medium">
+          <p class="time">5:45 PM</p>
+          <p class="title">Andy'...</p>
+        </div>
+        <div class="card large">
+          <p class="time">6:00 PM</p>
+          <p class="title">Playtime To...</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- FanCode Row -->
+    <div class="row">
+      <h2>FanCode</h2>
+      <div class="cards-list">
+
+        <div class="card channel-logo">
+          <span>FANCODE FC1</span>
+          <span class="lock">🔒</span>
+        </div>
+
+        <div class="card active fancode-card">
+          <p class="time-left">19 min left</p>
+          <p class="title underlined">Best of the ODIs</p>
+          <div class="progress-bar">
+            <div class="progress"></div>
+          </div>
+        </div>
+
+        <div class="card large">
+          <p class="time">4:00 PM</p>
+          <p class="title">Best of the T20s</p>
+        </div>
+        <div class="card large">
+          <p class="time">4:30 PM</p>
+          <p class="title">Best of the T20s</p>
+        </div>
+        <div class="card large">
+          <p class="time">5:00 PM</p>
+          <p class="title">Best of the Tests</p>
+        </div>
+        <div class="card large">
+          <p class="time">5:30 PM</p>
+          <p class="title">Best of the T20s</p>
+        </div>
+        <div class="card xl">
+          <p class="time">6:00 PM</p>
+          <p class="title">Cricket Highlights</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- cards -->
+    <div>
+      <h1 style="margin-left: 16px; color: white; margin-top: 12px;">FanCode: Live and upcoming events <small><em>See
+            more
+            ❯</em></small></h1>
+      <section class="card1">
+        <div class="one">
+          <img src="https://assets-in.bmscdn.com/discovery-catalog/events/et00490363-kvcgbmtzyk-landscape.jpg"
+            alt="movie1" width="400px " height="230px" style="border-radius: 18px;">
+        </div>
+        <div class="two">
+          <img src="https://i.pinimg.com/1200x/e8/e1/96/e8e196250275bbbb03a1923dcd26426e.jpg" alt="movie2" width="400px"
+            height="230px" style="border-radius: 18px;">
+        </div>
+        <div class="three">
+          <img src="https://i.pinimg.com/1200x/e1/ea/46/e1ea46f488aabc3264a72555265e2d05.jpg" alt="movie3" width="400px"
+            height="230px" style="border-radius: 18px;">
+        </div>
+        <div class="four">
+          <img src="https://i.pinimg.com/736x/04/f7/fc/04f7fc77e39b531f7360f7d7dcd33fa3.jpg" alt="movie4" width="400px"
+            height="230px" style="border-radius: 18px;">
+        </div>
+      </section>
+
+    </div>
+
+</body>
+
+</html>
